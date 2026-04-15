@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hurricars — Buy & Sell Vehicles</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #121212; color: #fff; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif; }
+
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 48px; border-bottom: 1px solid #2C2C2E;
+  }
+  .logo {
+    font-size: 22px; font-weight: 900; letter-spacing: 1px;
+    background: linear-gradient(90deg, #FF4500, #FF8C00, #FFD700);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  nav a {
+    color: #A0A0A0; text-decoration: none; font-size: 15px;
+    transition: color 0.2s;
+  }
+  nav a:hover { color: #fff; }
+  nav .nav-links { display: flex; gap: 32px; align-items: center; }
+  .btn-nav {
+    background: linear-gradient(90deg, #FF4500, #FF8C00);
+    color: #fff !important; padding: 10px 22px; border-radius: 22px;
+    font-weight: 600; font-size: 14px;
+  }
+
+  .hero {
+    text-align: center; padding: 100px 24px 80px;
+    max-width: 760px; margin: 0 auto;
+  }
+  .badge {
+    display: inline-block; background: rgba(255,69,0,0.15);
+    border: 1px solid rgba(255,69,0,0.4); color: #FF8C00;
+    padding: 6px 16px; border-radius: 20px; font-size: 13px;
+    font-weight: 600; margin-bottom: 28px; letter-spacing: 0.5px;
+  }
+  h1 {
+    font-size: clamp(36px, 6vw, 64px); font-weight: 900;
+    line-height: 1.1; margin-bottom: 24px; letter-spacing: -1px;
+  }
+  h1 span {
+    background: linear-gradient(90deg, #FF4500, #FF8C00, #FFD700);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .subtitle {
+    font-size: 18px; color: #A0A0A0; line-height: 1.6;
+    max-width: 520px; margin: 0 auto 40px;
+  }
+  .hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: linear-gradient(90deg, #FF4500, #FF8C00, #FFD700);
+    color: #fff; padding: 16px 32px; border-radius: 12px;
+    font-weight: 700; font-size: 16px; text-decoration: none;
+    box-shadow: 0 0 24px rgba(255,69,0,0.4);
+  }
+  .btn-secondary {
+    background: #1E1E1E; color: #fff; padding: 16px 32px;
+    border-radius: 12px; font-weight: 600; font-size: 16px;
+    text-decoration: none; border: 1px solid #2C2C2E;
+  }
+
+  .stats {
+    display: flex; justify-content: center; gap: 60px;
+    padding: 48px 24px; border-top: 1px solid #2C2C2E;
+    border-bottom: 1px solid #2C2C2E;
+  }
+  .stat-num {
+    font-size: 36px; font-weight: 900;
+    background: linear-gradient(90deg, #FF4500, #FFD700);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .stat-label { font-size: 14px; color: #A0A0A0; margin-top: 4px; }
+
+  .features {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px; max-width: 1100px; margin: 80px auto; padding: 0 24px;
+  }
+  .feature-card {
+    background: #1E1E1E; border: 1px solid #2C2C2E;
+    border-radius: 16px; padding: 32px 24px;
+  }
+  .feature-icon { font-size: 36px; margin-bottom: 16px; }
+  .feature-title { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+  .feature-text { font-size: 15px; color: #A0A0A0; line-height: 1.6; }
+
+  .how {
+    max-width: 800px; margin: 0 auto 80px; padding: 0 24px; text-align: center;
+  }
+  .section-title { font-size: 36px; font-weight: 900; margin-bottom: 48px; }
+  .steps { display: flex; gap: 32px; justify-content: center; flex-wrap: wrap; }
+  .step {
+    flex: 1; min-width: 180px; background: #1E1E1E;
+    border: 1px solid #2C2C2E; border-radius: 16px; padding: 28px 20px;
+  }
+  .step-num {
+    width: 40px; height: 40px; border-radius: 50%; margin: 0 auto 16px;
+    background: linear-gradient(135deg, #FF4500, #FFD700);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900; font-size: 18px;
+  }
+  .step-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+  .step-text { font-size: 14px; color: #A0A0A0; line-height: 1.5; }
+
+  .cta-section {
+    text-align: center; padding: 80px 24px;
+    background: linear-gradient(180deg, #1a0a00 0%, #121212 100%);
+    border-top: 1px solid #2C2C2E;
+  }
+  .cta-section h2 { font-size: 40px; font-weight: 900; margin-bottom: 16px; }
+  .cta-section p { color: #A0A0A0; font-size: 17px; margin-bottom: 36px; }
+
+  footer {
+    border-top: 1px solid #2C2C2E; padding: 32px 48px;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 16px;
+  }
+  footer p { color: #A0A0A0; font-size: 14px; }
+  footer a { color: #A0A0A0; text-decoration: none; font-size: 14px; margin-left: 24px; }
+  footer a:hover { color: #fff; }
+
+  .app-badges { display: flex; gap: 12px; justify-content: center; margin-top: 32px; }
+  .app-badge {
+    background: #1E1E1E; border: 1px solid #2C2C2E;
+    border-radius: 12px; padding: 12px 24px;
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none; color: #fff;
+  }
+  .app-badge-icon { font-size: 28px; }
+  .app-badge-text { text-align: left; }
+  .app-badge-sub { font-size: 11px; color: #A0A0A0; }
+  .app-badge-name { font-size: 16px; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">HURRICARS</div>
+  <div class="nav-links">
+    <a href="#how">How it works</a>
+    <a href="#features">Features</a>
+    <a href="mailto:support@hurricars.app">Contact</a>
+    <a href="#download" class="btn-nav">Download App</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="badge">🚗 USA's Fastest Growing Vehicle Marketplace</div>
+  <h1>Buy & Sell Any Vehicle<br><span>Fast, Free & Safe</span></h1>
+  <p class="subtitle">
+    List your car, truck, motorcycle, boat, or RV for free.
+    Reach thousands of buyers across the United States.
+  </p>
+  <div class="hero-btns">
+    <a href="#download" class="btn-primary">📱 Get the App — Free</a>
+    <a href="#how" class="btn-secondary">See how it works →</a>
+  </div>
+
+  <div class="app-badges" id="download">
+    <a href="#" class="app-badge">
+      <div class="app-badge-icon">🍎</div>
+      <div class="app-badge-text">
+        <div class="app-badge-sub">Download on the</div>
+        <div class="app-badge-name">App Store</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<div class="stats">
+  <div>
+    <div class="stat-num">Free</div>
+    <div class="stat-label">To list your vehicle</div>
+  </div>
+  <div>
+    <div class="stat-num">50+</div>
+    <div class="stat-label">Vehicle categories</div>
+  </div>
+  <div>
+    <div class="stat-num">USA</div>
+    <div class="stat-label">All 50 states</div>
+  </div>
+  <div>
+    <div class="stat-num">24h</div>
+    <div class="stat-label">Listing approval</div>
+  </div>
+</div>
+
+<div class="features" id="features">
+  <div class="feature-card">
+    <div class="feature-icon">🚗</div>
+    <div class="feature-title">All Vehicle Types</div>
+    <div class="feature-text">Cars, trucks, motorcycles, boats, RVs, trailers, ATVs — list anything with wheels or a motor.</div>
+  </div>
+  <div class="feature-card">
+    <div class="feature-icon">⚡</div>
+    <div class="feature-title">Top Placement Auctions</div>
+    <div class="feature-text">Bid for a top spot in search results. The highest bidder appears first — outbid competitors in real time.</div>
+  </div>
+  <div class="feature-card">
+    <div class="feature-icon">🛡️</div>
+    <div class="feature-title">Manual Moderation</div>
+    <div class="feature-text">Every listing is reviewed by our team before going live. No scams, no fake listings.</div>
+  </div>
+  <div class="feature-card">
+    <div class="feature-icon">💬</div>
+    <div class="feature-title">Direct Messaging</div>
+    <div class="feature-text">Message sellers directly inside the app. No need to share your personal contact info.</div>
+  </div>
+  <div class="feature-card">
+    <div class="feature-icon">📍</div>
+    <div class="feature-title">Location-Based Search</div>
+    <div class="feature-text">Filter by state, city, and radius. Find vehicles near you or anywhere across the USA.</div>
+  </div>
+  <div class="feature-card">
+    <div class="feature-icon">🔄</div>
+    <div class="feature-title">Instant Refunds</div>
+    <div class="feature-text">If someone outbids you, you get a full automatic refund. No risk, no hassle.</div>
+  </div>
+</div>
+
+<div class="how" id="how">
+  <div class="section-title">How It Works</div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-title">List for Free</div>
+      <div class="step-text">Post your vehicle in minutes. Add photos, details, and price.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-title">Get Approved</div>
+      <div class="step-text">Our team reviews and approves your listing within 24 hours.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-title">Boost (Optional)</div>
+      <div class="step-text">Bid for a top spot to get seen first by thousands of buyers.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-title">Sell Fast</div>
+      <div class="step-text">Receive messages, negotiate, and close the deal.</div>
+    </div>
+  </div>
+</div>
+
+<div class="cta-section">
+  <h2>Ready to sell your vehicle?</h2>
+  <p>Download the Hurricars app and list for free today.</p>
+  <a href="#download" class="btn-primary">📱 Download — It's Free</a>
+</div>
+
+<footer>
+  <div class="logo" style="font-size:16px;">HURRICARS</div>
+  <p>© 2026 Hurricars. All rights reserved. USA Vehicle Marketplace.</p>
+  <div>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Service</a>
+    <a href="mailto:support@hurricars.app">support@hurricars.app</a>
+  </div>
+</footer>
+
+</body>
+</html>
